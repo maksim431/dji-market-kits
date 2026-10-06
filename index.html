@@ -54,10 +54,18 @@ a{color:inherit;text-decoration:none}
 
 /* product layout */
 .pdp{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;align-items:start;padding-bottom:40px}
-.gallery{position:sticky;top:88px;background:var(--c-surface);border-radius:var(--r-l);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.gallery svg{width:88%;height:auto}
-.gallery__note{position:absolute;right:16px;text-align:right;bottom:16px;font-size:12px;color:var(--c-text-3)}
-.gallery__kit{position:absolute;top:16px;left:16px;display:flex;gap:6px;flex-wrap:wrap}
+.gallery{position:sticky;top:88px}
+.gallery__main{position:relative;background:var(--c-surface);border-radius:var(--r-l);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.gallery__main img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;transition:opacity .2s}
+.gallery__main img.is-loading{opacity:.3}
+.gallery__thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
+.thumb{flex:0 0 72px;height:72px;border-radius:var(--r-s);background:var(--c-surface);border:2px solid transparent;overflow:hidden;padding:0}
+.thumb img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.thumb.is-active{border-color:var(--c-primary)}
+.ph-fallback{display:flex;align-items:center;justify-content:center;color:var(--c-text-3);width:100%;height:100%}
+.ph-fallback svg{width:60%;height:60%}
+.gallery__note{position:absolute;right:12px;bottom:10px;font-size:11px;color:var(--c-text-3);background:rgba(255,255,255,.8);padding:2px 8px;border-radius:var(--r-pill)}
+.gallery__kit{position:absolute;z-index:1;top:16px;left:16px;display:flex;gap:6px;flex-wrap:wrap}
 .gallery__kit svg{width:14px;height:14px}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:5px 10px;border-radius:var(--r-pill);background:#fff;color:var(--c-text)}
 
@@ -74,7 +82,8 @@ h1{font-size:28px;line-height:32px;font-weight:600;color:var(--c-text);margin-bo
 .kit:hover{border-color:#C9D3E3}
 .kit.is-active{border-color:var(--c-primary);box-shadow:0 0 0 1px var(--c-primary)}
 .kit.is-reco{background:linear-gradient(0deg,var(--c-primary-bg),var(--c-primary-bg)),#fff}
-.kit__img{flex:0 0 52px;height:52px;border-radius:var(--r-s);background:var(--c-surface);display:flex;align-items:center;justify-content:center}
+.kit__img{flex:0 0 56px;height:56px;border-radius:var(--r-s);background:var(--c-surface);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.kit__img img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
 .kit__img svg{width:38px;height:38px}
 .kit__name{font-size:14px;line-height:19px;font-weight:500}
 .kit__price{font-size:18px;font-weight:700;margin-top:2px;white-space:nowrap}
@@ -103,6 +112,9 @@ h1{font-size:28px;line-height:32px;font-weight:600;color:var(--c-text);margin-bo
 .drow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:var(--r-m);padding:10px 12px}
 .drow__ic{flex:0 0 36px;height:36px;border-radius:var(--r-s);background:var(--c-primary-bg);color:var(--c-primary);display:flex;align-items:center;justify-content:center}
 .drow__ic svg{width:24px;height:24px}
+.drow__ph{flex:0 0 48px;height:48px;border-radius:var(--r-s);background:var(--c-surface);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--c-primary)}
+.drow__ph img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.drow__ph svg{width:26px;height:26px}
 .drow__t{flex:1;min-width:0;font-size:14px;line-height:19px}
 .drow__t small{display:block;color:var(--c-text-3);font-size:12px}
 .drow__p{font-size:14px;font-weight:600;color:var(--c-text-2);white-space:nowrap}
@@ -136,8 +148,10 @@ h1{font-size:28px;line-height:32px;font-weight:600;color:var(--c-text);margin-bo
 .contents h2{font-size:32px;font-weight:700;margin-bottom:20px}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
 .citem{background:var(--c-surface);border-radius:var(--r-l);padding:16px;display:flex;flex-direction:column;gap:10px;position:relative}
-.citem__img{height:84px;display:flex;align-items:center;justify-content:center;color:var(--c-text-2)}
+.citem__img{height:140px;display:flex;align-items:center;justify-content:center;color:var(--c-text-2);background:#fff;border-radius:var(--r-m);overflow:hidden}
+.citem__img img{width:100%;height:100%;object-fit:contain}
 .citem__img svg{width:64px;height:64px}
+.cnote{grid-column:1/-1}
 .citem__n{font-size:14px;line-height:19px}
 .citem__q{font-size:13px;color:var(--c-text-3)}
 .citem.is-new::after{content:"нет в базовом";position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;color:var(--c-primary);background:#fff;padding:2px 6px;border-radius:var(--r-pill)}
@@ -186,6 +200,8 @@ table.cmp{border-collapse:separate;border-spacing:0;width:100%;min-width:760px;f
 .cmp .col-name{font-weight:600;font-size:14px;line-height:18px}
 .cmp .col-price{font-size:18px;font-weight:800}
 .cmp .col-delta{font-size:12px;color:var(--c-text-3)}
+.cmp .col-ph{width:100%;height:84px;border-radius:var(--r-s);background:var(--c-surface);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.cmp .col-ph img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
 .cmp .col-x{align-self:flex-end;width:28px;height:28px;border-radius:var(--r-pill);color:var(--c-text-3);display:flex;align-items:center;justify-content:center;margin-bottom:-4px}
 .cmp .col-x:hover{background:var(--c-surface);color:var(--c-text)}
 .cmp td.is-sel,.cmp th.is-sel{box-shadow:inset 2px 0 0 var(--c-primary),inset -2px 0 0 var(--c-primary)}
@@ -313,9 +329,12 @@ table.cmp{border-collapse:separate;border-spacing:0;width:100%;min-width:760px;f
 
   <section class="pdp">
     <div class="gallery" id="gallery">
-      <div class="gallery__kit" id="galleryChips"></div>
-      <svg viewBox="0 0 400 300" aria-hidden="true" id="galleryArt"></svg>
-      <div class="gallery__note">Иллюстрация концепта. Фото товара на сайте магазина.</div>
+      <div class="gallery__main">
+        <div class="gallery__kit" id="galleryChips"></div>
+        <img id="galleryImg" alt="" decoding="async">
+        <div class="gallery__note">Фото: dji-market.ru</div>
+      </div>
+      <div class="gallery__thumbs" id="galleryThumbs" role="tablist" aria-label="Фото товара"></div>
     </div>
 
     <div>
@@ -468,7 +487,7 @@ var ACC={bat:13000,batp:15500,hub:6900,nd:6500,bag:4900,prop:990,rc2up:16000};
 
 var KITS=[
  {id:'tushka',name:'DJI Mini 5 Pro (Тушка)',short:'Тушка',price:77000,sku:'mini5pro_body',rc:'Нет',screen:false,phone:'—',bats:1,plus:false,hub:false,nd:false,bag:false,props:1,weight:'249,9 г',
-  has:'Без пульта · 1 АКБ',who:'Если у вас уже есть пульт RC-N3 или RC 2'},
+  has:'Только дрон, без пульта',who:'Если у вас уже есть пульт RC-N3 или RC 2'},
  {id:'rcn3',name:'DJI Mini 5 Pro (RC-N3)',short:'RC-N3',price:81000,sku:'mini5pro_rcn3',rc:'RC-N3',screen:false,phone:'Да',bats:1,plus:false,hub:false,nd:false,bag:false,props:1,weight:'249,9 г',
   has:'Пульт под смартфон · 1 АКБ',who:'Попробовать: короткие полёты рядом с домом'},
  {id:'fmc-n3',name:'DJI Mini 5 Pro Fly More Combo (RC-N3)',short:'Fly More RC-N3',price:105000,sku:'mini5pro_fmc_rcn3',rc:'RC-N3',screen:false,phone:'Да',bats:3,plus:false,hub:true,nd:true,bag:true,props:3,weight:'249,9 г',
@@ -479,6 +498,18 @@ var KITS=[
   has:'Пульт с экраном · 3 АКБ Plus · хаб · сумка',who:'Полдня вдали от розетки: +16 мин на каждой батарее',popular:true}
 ];
 KITS.forEach(function(k){k.minPer=k.plus?52:36;k.total=k.minPer*k.bats});
+/* Фото с карточек dji-market.ru (подгружаются с сайта магазина) */
+var MS='https://dji-market.ru/api/v1/product-media/',MK='https://dji-market.ru/api/v1/product-kit-media/';
+var SHARED=['8cf3af03-a275-4f17-9d89-a5100e644d3a','a56c3e64-9255-46b8-b7df-e5d08f7bfba5','bb58eb72-4ddd-493e-9d0f-7825f80a2760'];
+var MEDIA={
+ 'tushka':{main:'3c0976ee-aed4-408c-8470-81840069d6bc',k:{drone:'e8cf7688-f74f-5b50-b37f-e413deb841f7'}},
+ 'rcn3':{main:'b113ef37-cbfa-424b-a4ce-009dfa242851',k:{drone:'f09bd883-f457-5c53-aaa1-9741378ae400',rc:'2498c83e-81c0-5502-b351-0527336bf2c0',bat:'d31dabf4-c896-5ac8-8906-6ad97c4e1b7c',prop:'a8535487-db4c-5a24-a755-269fb0d5a7ea',cover:'591e4143-eea9-5fc2-81f1-8681e041d076',cable:'2e99d2a1-f305-5ee6-a3e5-a03c281bc5b5',rcl:'7ed38c97-9333-5f95-8d51-4a09c431882f',rcc:'0dbe98b0-58dc-5240-9747-702e6b3b2250'}},
+ 'fmc-n3':{main:'175508ca-34a7-47b1-a2ee-7d0af71a3b05',k:{drone:'916997fe-c9e6-512d-ba80-29f6c6271a04',rc:'20666fca-dde0-5387-948f-a65db4706eda',bat:'b57156fb-0369-54fd-90a4-1132120e706f',hub:'4d3f4b0c-c9eb-50a3-9e21-b757501038de',nd:'97a37d9b-5170-5e86-a359-3cfecad03951',bag:'32eb7ed1-38d5-5658-96fd-e09c9480b759',prop:'a71e76ee-cf1c-506d-af29-68d4e29d9104',cover:'e58326e0-6e14-5b9c-bc3b-655c076ca2d0',cable:'2daa1e79-618b-50cf-81e9-74646a901419',rcl:'cb4b9a08-431f-5554-8df1-b1f248da7d41',rcc:'5a91f7cb-6d95-5f88-ac4a-96b5f55d2de5'}},
+ 'fmc-rc2':{main:'729a4701-c075-465a-86b5-1261c6bf12b9',k:{drone:'ece0ace5-58f6-5a5a-9cf7-daa871f81863',rc2:'110437d1-b32c-5c20-9223-64718739182d',bat:'85929834-dad6-50d9-9492-c4c8318aaec2',hub:'16d96be0-a81d-5ef9-8124-13d9d7c0d5be',nd:'c529bf6c-ec87-59c9-a2f4-f30fd56bd9c5',bag:'f9d17348-2306-54bf-8151-9e3fd1234416',prop:'e59a1b98-3e12-5dfb-af24-38dcbb345480',cover:'800a7369-c3a9-5bca-a55c-33ab6e7d104d',cable:'9b39ef09-51f6-5650-820b-c96f07bf155e'}},
+ 'fmc-plus':{main:'729a4701-c075-465a-86b5-1261c6bf12b9',k:{drone:'2ee43304-3a1b-5b30-839d-9e3ad1d8e4f2',rc2:'3fedf71b-8ddf-5e75-9da1-4c777f611a11',batp:'7c83e79a-e348-552e-80fa-1ac747450cdd',hub:'caf394ac-6aab-57d5-a87d-2ff89d5a3196',nd:'eedf58e4-71db-57a0-83fc-3ab4f587234b',bag:'6deb89ec-fc2b-5b4d-8b7f-6cd2cfa44e7c',prop:'00bcba5d-86a0-52a8-9846-cfd7fbe83eb3',cover:'8b7565bc-9d3d-5ac5-a439-49314d4dd170',cable:'eef6a899-84d9-5b3b-8b6a-cf9642152929'}}
+};
+function kitPhoto(kitId,key){var m=MEDIA[kitId].k[key];if(m)return MK+m;for(var id in MEDIA){if(MEDIA[id].k[key])return MK+MEDIA[id].k[key]}return null}
+function imgTag(src,icon,alt){return src?'<img src="'+src+'" alt="'+(alt||'')+'" loading="lazy" decoding="async" data-fb="'+icon+'">':IC[icon]}
 var byId={};KITS.forEach(function(k){byId[k.id]=k});
 
 var BUYERS=[{id:'p',l:'Цена для физ. лиц',m:1,ic:'<svg width="18" height="18" viewBox="0 0 24 24" fill="#3475FF"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0z"/></svg>'},
@@ -491,6 +522,7 @@ var price=function(k){var m=BUYERS.filter(function(b){return b.id===st.buyer})[0
 /* Состав комплекта для блока «Комплектация» */
 function items(k){
   var a=[{ic:'drone',n:'Квадрокоптер DJI Mini 5 Pro',q:'1 шт.'}];
+  if(k.id==='tushka')return a;
   if(k.rc==='RC-N3')a.push({ic:'rc',n:'Пульт управления DJI RC-N3',q:'1 шт.'});
   if(k.rc==='DJI RC 2')a.push({ic:'rc2',n:'Пульт DJI RC 2 с экраном 5,5″',q:'1 шт.',diff:true});
   a.push({ic:k.plus?'batp':'bat',n:k.plus?'Полётный аккумулятор Plus (52 мин)':'Полётный аккумулятор (36 мин)',q:k.bats+' шт.',diff:k.bats>1||k.plus});
@@ -500,7 +532,7 @@ function items(k){
   a.push({ic:'prop',n:'Запасные пропеллеры',q:k.props+(k.props>1?' пары':' пара'),diff:k.props>1});
   a.push({ic:'cover',n:'Транспортировочная защита',q:'1 шт.'});
   a.push({ic:'cable',n:'Кабель USB-C — USB-C',q:'1 шт.'});
-  if(k.rc==='RC-N3')a.push({ic:'cable',n:'Кабели пульта Lightning и USB-C',q:'2 шт.'});
+  if(k.rc==='RC-N3'){a.push({ic:'cable',key:'rcc',n:'Кабель пульта RC-N, разъём USB-C',q:'1 шт.'});a.push({ic:'cable',key:'rcl',n:'Кабель пульта RC-N, разъём Lightning',q:'1 шт.'})}
   return a;
 }
 
@@ -534,11 +566,12 @@ function renderKits(){
     var act=k.id===st.kit,reco=k.id===st.reco;
     var flag=reco?'<span class="kit__flag kit__flag--reco">Подходит вам</span>':(k.newbie?'<span class="kit__flag">Выбор новичков</span>':'');
     return '<button class="kit'+(act?' is-active':'')+(reco?' is-reco':'')+'" role="radio" aria-checked="'+act+'" data-kit="'+k.id+'">'+flag+
-      '<span class="kit__img">'+(k.rc==='Нет'?IC.drone:(k.bats>1?IC.bag:(IC.rc)))+'</span>'+
+      '<span class="kit__img">'+imgTag(MS+MEDIA[k.id].main,k.rc==='Нет'?'drone':'rc',k.name)+'</span>'+
       '<span><span class="kit__name">'+k.name+'</span><span class="kit__price" style="display:block">'+nb(fmt(price(k)))+'</span><span class="kit__has" style="display:block">'+k.has+'</span></span></button>';
   }).join('');
 }
 
+function rowPh(kitId,ic){return '<span class="drow__ph">'+imgTag(kitPhoto(kitId,ic),ic)+'</span>'}
 function renderDelta(){
   var k=byId[st.kit];
   var idx=KITS.indexOf(k);
@@ -547,15 +580,15 @@ function renderDelta(){
   if(!base){
     var nxt=byId['fmc-rc2'];var d=deltaRows(k,nxt);
     html='<div class="delta__top"><div><div class="delta__title">Базовый комплект: только самое нужное</div><div class="delta__sub">'+k.who+'</div></div></div>'+
-      '<div class="dlist"><div class="drow"><span class="drow__ic">'+IC.clock+'</span><span class="drow__t">36 минут полёта на одной батарее<small>Потом нужно 46 мин на зарядку</small></span></div>'+
-      '<div class="drow"><span class="drow__ic">'+IC.phone+'</span><span class="drow__t">Пульт работает со смартфоном<small>Lightning и USB-C кабели в комплекте</small></span></div></div>'+
+      '<div class="dlist"><div class="drow">'+rowPh(k.id,'bat')+'<span class="drow__t">36 минут полёта на одной батарее<small>Потом нужно 46 мин на зарядку</small></span></div>'+
+      '<div class="drow">'+rowPh(k.id,'rc')+'<span class="drow__t">Пульт работает со смартфоном<small>Lightning и USB-C кабели в комплекте</small></span></div></div>'+
       '<div class="note">'+IC.info+'<span>За <b>+'+nb(fmt(price(nxt)-price(k)))+'</b> Fly More Combo с RC 2 добавит 2 аккумулятора, хаб, сумку, ND-фильтры и пульт с экраном. По отдельности это около '+nb(fmt(d.worth))+'. <button class="link" data-goto="fmc-rc2" style="font-size:13px">Посмотреть</button></span></div>';
   }else{
     var d2=deltaRows(base,k);var dp=price(k)-price(base);
     var save=Math.round((d2.worth*(price(k)/k.price)-dp)/100)*100;
     html='<div class="delta__top"><div><div class="delta__title">'+(dp>=0?'За доплату +'+nb(fmt(dp)):'Дешевле на '+nb(fmt(-dp)))+' к комплекту с RC-N3</div><div class="delta__sub">'+k.who+'</div></div>'+
       (save>0?'<span class="save">Выгода ≈ '+nb(fmt(save))+'</span>':'')+'</div>'+
-      '<div class="dlist">'+d2.rows.map(function(r){return '<div class="drow'+(r.minus?' drow--minus':'')+'"><span class="drow__ic">'+IC[r.ic]+'</span><span class="drow__t">'+r.t+(r.s?'<small>'+r.s+'</small>':'')+'</span><span class="drow__p">'+nb(r.p)+'</span></div>'}).join('')+'</div>';
+      '<div class="dlist">'+d2.rows.map(function(r){return '<div class="drow'+(r.minus?' drow--minus':'')+'">'+(r.minus?'<span class="drow__ic">'+IC[r.ic]+'</span>':rowPh(k.id,r.ic))+'<span class="drow__t">'+r.t+(r.s?'<small>'+r.s+'</small>':'')+'</span><span class="drow__p">'+nb(r.p)+'</span></div>'}).join('')+'</div>';
     if(k.plus)html+='<div class="note">'+IC.info+'<span>С аккумулятором Plus взлётная масса больше 249,9 г: дрон заметнее сносит боковым ветром. На регистрацию в России это не влияет, её проходят все дроны тяжелее 150 г.</span></div>';
     if(k.id==='fmc-n3')html+='<div class="note">'+IC.info+'<span>Пульт с экраном RC 2 стоит всего на <b>+1 000 ₽</b> больше. <button class="link" data-goto="fmc-rc2" style="font-size:13px">Переключить на RC 2</button></span></div>';
   }
@@ -575,8 +608,9 @@ function renderBuyers(){
 
 function renderContents(){
   var k=byId[st.kit];
-  $('cgrid').innerHTML=items(k).map(function(i){
-    return '<div class="citem'+(i.diff&&k.bats>1?' is-new':'')+'"><div class="citem__img">'+IC[i.ic]+'</div><div class="citem__n">'+i.n+'</div><div class="citem__q">'+i.q+'</div></div>';
+  var note=k.id==='tushka'?'<div class="note cnote">'+IC.info+'<span>В карточке на сайте в составе «Тушки» указан только квадрокоптер. Если аккумулятор входит в комплект, его стоит добавить в список, иначе покупатель не поймёт, сможет ли он полететь сразу.</span></div>':'';
+  $('cgrid').innerHTML=note+items(k).map(function(i){
+    return '<div class="citem'+(i.diff&&k.bats>1?' is-new':'')+'"><div class="citem__img">'+imgTag(kitPhoto(k.id,i.key||i.ic),i.ic,i.n)+'</div><div class="citem__n">'+i.n+'</div><div class="citem__q">'+i.q+'</div></div>';
   }).join('');
 }
 
@@ -586,21 +620,11 @@ function renderGallery(){
   if(k.screen)chips.push('<span class="chip">Пульт с экраном</span>');
   if(k.bag)chips.push('<span class="chip">Сумка в комплекте</span>');
   $('galleryChips').innerHTML=chips.join('');
-  // крупная иллюстрация-раскладка комплекта
-  var g='<defs><linearGradient id="gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9AA3B2"/><stop offset="1" stop-color="#5C6373"/></linearGradient><linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9CFDA"/><stop offset="1" stop-color="#8B909B"/></linearGradient></defs>';
-  // drone
-  g+='<g transform="translate(70 70)"><ellipse cx="60" cy="96" rx="70" ry="10" fill="#162036" opacity=".06"/><path d="M20 30 0 14M100 30l20-16M20 66 0 84M100 66l20 18" stroke="#5C6373" stroke-width="8" stroke-linecap="round"/><rect x="18" y="20" width="84" height="58" rx="18" fill="url(#gd)"/><rect x="44" y="64" width="32" height="26" rx="10" fill="#3B4252"/><circle cx="60" cy="77" r="8" fill="#0F172A"/><circle cx="60" cy="77" r="3" fill="#3475FF"/><ellipse cx="0" cy="12" rx="26" ry="5" fill="#8B909B" opacity=".8"/><ellipse cx="120" cy="12" rx="26" ry="5" fill="#8B909B" opacity=".8"/><ellipse cx="0" cy="86" rx="26" ry="5" fill="#8B909B" opacity=".8"/><ellipse cx="120" cy="86" rx="26" ry="5" fill="#8B909B" opacity=".8"/></g>';
-  if(k.rc!=='Нет'){
-    g+='<g transform="translate(232 64)"><rect x="0" y="40" width="120" height="56" rx="24" fill="url(#gl)"/><circle cx="26" cy="68" r="10" fill="#5C6373"/><circle cx="94" cy="68" r="10" fill="#5C6373"/>';
-    if(k.screen)g+='<rect x="24" y="0" width="72" height="46" rx="6" fill="#0F172A"/><rect x="29" y="5" width="62" height="36" rx="3" fill="#3475FF" opacity=".85"/><path d="M33 34l14-12 10 8 12-14 18 18" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>';
-    else g+='<rect x="30" y="18" width="60" height="26" rx="6" fill="none" stroke="#9AA3B2" stroke-width="3" stroke-dasharray="5 5"/><text x="60" y="35" text-anchor="middle" font-size="10" fill="#5C6373" font-family="Manrope">смартфон</text>';
-    g+='</g>';
-  }
-  var bx=60;for(var i=0;i<k.bats;i++){g+='<g transform="translate('+(bx+i*58)+' 212)"><rect width="48" height="34" rx="8" fill="'+(k.plus?'#3475FF':'url(#gd)')+'"/><rect x="8" y="12" width="32" height="4" rx="2" fill="#fff" opacity=".5"/>'+(k.plus?'<text x="24" y="28" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Manrope">PLUS</text>':'')+'</g>'}
-  if(k.hub)g+='<g transform="translate(240 214)"><rect width="70" height="30" rx="8" fill="url(#gl)"/><rect x="8" y="-6" width="14" height="8" rx="2" fill="#8B909B"/><rect x="28" y="-6" width="14" height="8" rx="2" fill="#8B909B"/><rect x="48" y="-6" width="14" height="8" rx="2" fill="#8B909B"/></g>';
-  if(k.nd)g+='<g transform="translate(326 214)"><circle cx="10" cy="15" r="10" fill="#0F172A" opacity=".7"/><circle cx="26" cy="15" r="10" fill="#0F172A" opacity=".55"/><circle cx="42" cy="15" r="10" fill="#0F172A" opacity=".4"/></g>';
-  if(k.bag)g+='<g transform="translate(300 150)" opacity=".9"><rect width="80" height="48" rx="14" fill="#2B3445"/><path d="M8 0q32 -24 64 0" stroke="#2B3445" stroke-width="5" fill="none"/></g>';
-  $('galleryArt').innerHTML=g;
+  var pics=[MS+MEDIA[k.id].main].concat(SHARED.map(function(s){return MS+s}));
+  if(st.galKit!==k.id){st.gal=0;st.galKit=k.id}
+  var img=$('galleryImg'),src=pics[st.gal];
+  if(img.getAttribute('src')!==src){img.classList.add('is-loading');img.onload=function(){img.classList.remove('is-loading')};img.onerror=function(){img.classList.remove('is-loading');img.style.display='none'};img.style.display='';img.src=src;img.alt=k.name}
+  $('galleryThumbs').innerHTML=pics.map(function(u,i){return '<button class="thumb'+(i===st.gal?' is-active':'')+'" role="tab" aria-selected="'+(i===st.gal)+'" aria-label="Фото '+(i+1)+'" data-gal="'+i+'"><img src="'+u+'" alt="" loading="lazy" decoding="async"></button>'}).join('');
 }
 
 function renderPrice(){
@@ -614,9 +638,9 @@ var ROWS=[
  {k:'rc',l:'Пульт',f:function(k){return k.rc}},
  {k:'screen',l:'Экран в пульте',f:function(k){return k.screen?'<span class="yes">5,5″, 700 нит</span>':'<span class="no">Нет</span>'}},
  {k:'phone',l:'Нужен смартфон',f:function(k){return k.phone}},
- {k:'bats',l:'Аккумуляторы',f:function(k){return k.bats+' шт.'+(k.plus?' Plus':'')}},
+ {k:'bats',l:'Аккумуляторы',f:function(k){return k.id==='tushka'?'Уточнить':k.bats+' шт.'+(k.plus?' Plus':'')}},
  {k:'minPer',l:'Полёт на 1 АКБ',f:function(k){return k.minPer+' мин'}},
- {k:'total',l:'Полёт за выезд',f:function(k){return '<b>'+k.total+' мин</b>'},best:'max'},
+ {k:'total',l:'Полёт за выезд',f:function(k){return k.id==='tushka'?'<span class="no">Зависит от АКБ</span>':'<b>'+k.total+' мин</b>'},best:'max'},
  {k:'hub',l:'Зарядный хаб',f:function(k){return k.hub?'<span class="yes">Есть</span>':'<span class="no">Нет</span>'}},
  {k:'nd',l:'ND-фильтры',f:function(k){return k.nd?'<span class="yes">ND8/32/128</span>':'<span class="no">Нет</span>'}},
  {k:'bag',l:'Сумка',f:function(k){return k.bag?'<span class="yes">Есть</span>':'<span class="no">Нет</span>'}},
@@ -647,7 +671,7 @@ function renderCompare(){
     var sel=k.id===st.kit;
     var badge=k.id===st.reco?'<span class="reco-pill">Подходит вам</span>':(k.newbie?'<span class="reco-pill" style="background:var(--c-primary)">Выбор новичков</span>':'');
     return '<th class="'+(sel?'is-sel':'')+'"><div class="col-head"><button class="col-x" data-hide="'+k.id+'" aria-label="Скрыть '+k.short+'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'+badge+
-      '<span class="col-name">'+k.short+'</span><span class="col-price">'+nb(fmt(price(k)))+'</span><span class="col-delta">'+(k.price===minP?'Самый доступный':'+'+nb(fmt(price(k)-Math.round(minP*price(k)/k.price/1000)*1000)))+'</span>'+
+      '<span class="col-ph">'+imgTag(MS+MEDIA[k.id].main,'drone',k.short)+'</span><span class="col-name">'+k.short+'</span><span class="col-price">'+nb(fmt(price(k)))+'</span><span class="col-delta">'+(k.price===minP?'Самый доступный':'+'+nb(fmt(price(k)-Math.round(minP*price(k)/k.price/1000)*1000)))+'</span>'+
       (sel?'<button class="btn btn--primary btn--sm pick" disabled style="opacity:1">✓ Выбрано</button>':'<button class="btn btn--soft btn--sm pick" data-pick="'+k.id+'">Выбрать</button>')+'</div></th>';
   }).join('')+'</tr>';
   var body=rows.filter(function(r){return r.k!=='price'}).map(function(r){
@@ -701,6 +725,7 @@ function toast(text,act,fn){$('toastText').textContent=text;$('toastAct').textCo
 function addToCart(){st.cart++;var c=$('cartCount');c.hidden=false;c.textContent=st.cart;var k=byId[st.kit];toast(k.short+' добавлен в корзину','Отменить',function(){st.cart=Math.max(0,st.cart-1);c.textContent=st.cart;c.hidden=st.cart===0})}
 
 document.addEventListener('click',function(e){
+  var g=e.target.closest('[data-gal]');if(g){st.gal=+g.dataset.gal;renderGallery();return}
   var t=e.target.closest('[data-kit],[data-buyer],[data-close],[data-hide],[data-unhide],[data-pick],[data-mode],[data-q],[data-goto],[data-add],[data-oneclick]');
   if(!t){if(e.target.classList.contains('ov'))close(e.target);return}
   if(t.dataset.kit)selectKit(t.dataset.kit);
@@ -731,6 +756,7 @@ if('IntersectionObserver' in window){new IntersectionObserver(function(en){$('sb
 var pm='В связи с нестабильным курсом валют и пересмотром цен производителями, цены на товары являются ориентировочными.';
 $('promo').innerHTML=Array(8).join('<span>'+pm+'</span>');
 
+document.addEventListener('error',function(e){var el=e.target;if(el.tagName==='IMG'&&el.dataset.fb&&IC[el.dataset.fb]){var s=document.createElement('span');s.className='ph-fallback';s.innerHTML=IC[el.dataset.fb];el.replaceWith(s)}},true);
 renderAll();
 setTimeout(function(){open('ovAbout')},350);
 })();
